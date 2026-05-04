@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Unit 1: Sonia and Her Travels</title>
+<style>
+:root{
+  --primary:#2563eb;
+  --primary-dark:#1e40af;
+  --accent:#7c3aed;
+  --bg:#f4f6fb;
+  --card:#ffffff;
+  --border:#dbe3ef;
+  --text:#1f2937;
+  --muted:#64748b;
+  --success-bg:#ecfdf5;
+  --success:#166534;
+  --error-bg:#fef2f2;
+  --error:#991b1b;
+  --warning-bg:#fffbeb;
+  --warning-border:#fde68a;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial, Helvetica, sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.5;
+}
+header{
+  background:linear-gradient(135deg,var(--primary),var(--accent));
+  color:white;
+  padding:34px 18px;
+  text-align:center;
+}
+header h1{margin:0 0 8px;font-size:2rem}
+header p{margin:0;opacity:.95}
+main{
+  max-width:1120px;
+  margin:auto;
+  padding:24px;
+}
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:22px;
+  margin-bottom:20px;
+  box-shadow:0 8px 22px rgba(15,23,42,.06);
+}
+.badge{
+  display:inline-block;
+  background:#eef2ff;
+  color:#3730a3;
+  border-radius:999px;
+  padding:7px 12px;
+  font-size:.9rem;
+  font-weight:bold;
+  margin:4px 6px 10px 0;
+}
+.tabs{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+  margin-bottom:20px;
+}
+.tab-btn{
+  padding:14px;
+  border:none;
+  border-radius:14px;
+  background:white;
+  color:var(--primary);
+  border:1px solid var(--border);
+  cursor:pointer;
+  font-weight:bold;
+  font-size:1rem;
+}
+.tab-btn.active{
+  background:var(--primary);
+  color:white;
+}
+.tab-content{display:none}
+.tab-content.active{display:block}
+h2{color:var(--primary-dark);margin-top:0}
+h3{color:#0f172a;margin-top:22px}
+.instruction{
+  background:#eff6ff;
+  border-left:5px solid var(--primary);
+  padding:12px 14px;
+  border-radius:12px;
+  color:#1e3a8a;
+}
+.prompt{
+  background:var(--warning-bg);
+  border:1px solid var(--warning-border);
+  border-radius:14px;
+  padding:16px;
+  line-height:1.6;
+}
+.glossary{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+  gap:10px;
+}
+.glossary div{
+  background:#eef2ff;
+  padding:11px;
+  border-radius:12px;
+}
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:10px;
+  background:white;
+}
+th{
+  background:#eff6ff;
+  color:#1e3a8a;
+}
+td,th{
+  border:1px solid #cbd5e1;
+  padding:10px;
+  text-align:left;
+  vertical-align:top;
+}
+.unit-toggle{
+  width:100%;
+  text-align:left;
+  background:#eef2ff;
+  color:#1e40af;
+  border:1px solid #c7d2fe;
+  border-radius:14px;
+  padding:15px;
+  font-size:1.05rem;
+  font-weight:bold;
+  cursor:pointer;
+  margin:10px 0;
+}
+.unit-body{display:none;margin-top:14px}
+.unit-body.open{display:block}
+.audio-panel{
+  background:#f8fafc;
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:16px;
+  margin:14px 0;
+}
+.audio-controls{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  align-items:center;
+  margin-bottom:12px;
+}
+button.action{
+  padding:11px 14px;
+  background:var(--primary);
+  color:white;
+  border:none;
+  border-radius:12px;
+  cursor:pointer;
+  font-weight:bold;
+  margin:6px 4px 8px 0;
+}
+button.action:hover{background:var(--primary-dark)}
+.audio-status{
+  display:inline-block;
+  background:#eef2ff;
+  color:#1e40af;
+  border:1px solid #c7d2fe;
+  border-radius:999px;
+  padding:6px 10px;
+  font-weight:bold;
+}
+.audio-panel input[type=range]{
+  width:100%;
+  accent-color:var(--primary);
+  cursor:pointer;
+}
+.timeline-label{
+  font-weight:bold;
+  color:var(--primary-dark);
+  margin:10px 0 4px;
+}
+.part-buttons{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:10px;
+}
+.part-buttons button.selected-part{
+  background:#1e40af;
+  box-shadow:0 0 0 3px #bfdbfe;
+}
+.audio-note{
+  color:var(--muted);
+  font-size:.92rem;
+  margin-bottom:0;
+}
+.big-word{
+  font-size:1.2rem;
+  font-weight:bold;
+  color:#047857;
+}
+.translation-grid,
+.rubric,
+.example-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:12px;
+}
+.translation-box,
+.rubric div,
+.example-card{
+  background:#f8fafc;
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:14px;
+}
+.question{
+  background:#f8fafc;
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:14px;
+  margin:12px 0;
+}
+.question.correct{
+  background:var(--success-bg);
+  border-color:#86efac;
+}
+.question.incorrect{
+  background:var(--error-bg);
+  border-color:#fca5a5;
+}
+.answer-feedback{
+  font-weight:bold;
+  margin-top:8px;
+}
+.correct-text{color:var(--success)}
+.incorrect-text{color:var(--error)}
+.feedback{
+  display:none;
+  margin-top:12px;
+  padding:12px;
+  border-radius:12px;
+  background:var(--success-bg);
+  color:var(--success);
+  border:1px solid #bbf7d0;
+  font-weight:bold;
+}
+.feedback.show{display:block}
+input,select,textarea{
+  width:100%;
+  padding:10px;
+  border:1px solid #cbd5e1;
+  border-radius:12px;
+  margin:8px 0 10px;
+  font-size:1rem;
+}
+textarea{
+  min-height:150px;
+  resize:vertical;
+}
+footer{
+  text-align:center;
+  color:var(--muted);
+  padding:24px;
+  font-size:.92rem;
+}
+@media(max-width:760px){
+  .tabs{grid-template-columns:1fr 1fr}
+  header h1{font-size:1.55rem}
+  main{padding:16px}
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>Unit 1 / Unidad 1: Sonia and Her Travels / Sonia y sus viajes</h1>
+  <p>Middle School Spanish Practice: Reading, Listening, Speaking, and Writing</p>
+</header>
+
+<main>
+  <section class="card">
+    <span class="badge">Region: United States / Michigan</span>
+    <span class="badge">Genre: Realistic Fiction / Daily Life</span>
+    <span class="badge">Level: Beginner Spanish</span>
+    <p>This lesson helps students practice basic Spanish vocabulary, reflexive verbs, listening comprehension, partner conversations, and short writing.</p>
+  </section>
+
+  <nav class="tabs" aria-label="Skill tabs">
+    <button class="tab-btn active" onclick="openTab('reading',this)">Reading</button>
+    <button class="tab-btn" onclick="openTab('listening',this)">Listening</button>
+    <button class="tab-btn" onclick="openTab('speaking',this)">Speaking</button>
+    <button class="tab-btn" onclick="openTab('writing',this)">Writing</button>
+  </nav>
+
+  <section id="reading" class="tab-content active">
+    <div class="card">
+      <button class="unit-toggle" onclick="toggleUnit('unit1Body','unit1Icon')"><span id="unit1Icon">−</span> Unit 1: Sonia and Her Travels</button>
+      <div id="unit1Body" class="unit-body open">
+        <h2>Reading</h2>
+        <p class="instruction"><b>Instruction:</b> Read the story in Spanish. Use the glossary and sentence table to understand the text.</p>
+
+        <h3>Exercise 1: Glossary</h3>
+        <div class="glossary">
+          <div><b>cuando</b> = when</div>
+          <div><b>pero</b> = but</div>
+          <div><b>ver</b> = to see</div>
+          <div><b>veo, ves, ve</b> = I see, you see, he/she sees</div>
+          <div><b>ahora</b> = now</div>
+          <div><b>cuidado</b> = be careful</div>
+          <div><b>cielo</b> = sky</div>
+        </div>
+
+        <h3>Exercise 2: Story Reading</h3>
+        <div class="prompt">
+          <p>Sonia tiene 13 años. Vive en Michigan. Hace frío en invierno y calor en verano. Sonia es americana, pero sus papás son mexicanos. Su hermana también es mexicana.</p>
+          <p>Sonia habla español y también habla inglés. En la mañana dice: “Buenos días.” Luego dice: “Good morning.” Le gustan los dos idiomas.</p>
+          <p>Sonia tiene un perro. Su perro se llama Bolita (little ball). Es pequeño y muy juguetón. Sonia juega con Bolita todos los días.</p>
+        </div>
+
+        <h3>Exercise 3: Sentence Table</h3>
+        <table>
+          <tr><th>English</th><th>Spanish</th></tr>
+          <tr><td>Sonia is 13 years old.</td><td>Sonia tiene 13 años.</td></tr>
+          <tr><td>She lives in Michigan.</td><td>Vive en Michigan.</td></tr>
+          <tr><td>It is cold in winter and hot in summer.</td><td>Hace frío en invierno y calor en verano.</td></tr>
+          <tr><td>Sonia is American, but her parents are Mexican.</td><td>Sonia es americana, pero sus papás son mexicanos.</td></tr>
+          <tr><td>Her sister is also Mexican.</td><td>Su hermana también es mexicana.</td></tr>
+          <tr><td>Sonia speaks Spanish and also speaks English.</td><td>Sonia habla español y también habla inglés.</td></tr>
+          <tr><td>In the morning she says, “Good morning.”</td><td>En la mañana dice: “Buenos días.”</td></tr>
+          <tr><td>Then she says, “Good morning.”</td><td>Luego dice: “Good morning.”</td></tr>
+          <tr><td>She likes both languages.</td><td>Le gustan los dos idiomas.</td></tr>
+          <tr><td>Sonia has a dog.</td><td>Sonia tiene un perro.</td></tr>
+          <tr><td>Her dog is named Bolita.</td><td>Su perro se llama Bolita.</td></tr>
+          <tr><td>He is small and very playful.</td><td>Es pequeño y muy juguetón.</td></tr>
+          <tr><td>Sonia plays with Bolita every day.</td><td>Sonia juega con Bolita todos los días.</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <button class="unit-toggle" onclick="toggleUnit('unit2Body','unit2Icon')"><span id="unit2Icon">+</span> Unit 2: Reflexive Verbs</button>
+      <div id="unit2Body" class="unit-body">
+        <h2>Exercise 4: Lesson 2 — Reflexive Verbs</h2>
+        <p class="instruction"><b>Instruction:</b> Study the explanation. Use the audio controls to hear the explanation by part.</p>
+<h3>Exercise 4A: Audio Explanation</h3>
+
+        <div class="audio-panel">
+          <div class="audio-controls">
+            <button class="action" onclick="playGrammarAudio()">🔊 Play</button>
+            <button class="action" onclick="pauseGrammarAudio()">⏸ Pause</button>
+            <button class="action" onclick="resumeGrammarAudio()">▶ Resume</button>
+            <button class="action" onclick="stopGrammarAudio()">⏹ Stop</button>
+            <span id="grammarPlayStatus" class="audio-status">Stopped</span>
+          </div>
+          <label for="grammarTimeline"><b>Explanation timeline</b></label>
+          <input type="range" id="grammarTimeline" min="0" max="3" value="0" step="1" oninput="selectGrammarPart(Number(this.value), false)" onchange="selectGrammarPart(Number(this.value), true)">
+          <p id="grammarTimelineLabel" class="timeline-label">Part 1: What reflexive verbs mean.</p>
+          <p id="grammarStatus">Selected: Part 1</p>
+          <div class="part-buttons">
+            <button id="grammarPart0" class="action selected-part" onclick="selectGrammarPart(0, true)">Part 1</button>
+            <button id="grammarPart1" class="action" onclick="selectGrammarPart(1, true)">Part 2</button>
+            <button id="grammarPart2" class="action" onclick="selectGrammarPart(2, true)">Part 3</button>
+            <button id="grammarPart3" class="action" onclick="selectGrammarPart(3, true)">Part 4</button>
+          </div>
+          <p class="audio-note">Move the slider or click a part button. If audio is playing, it restarts from the selected part.</p>
+        </div>
+
+        <div class="prompt">
+          <p><b>Part 1: What reflexive verbs mean.</b><br>Reflexive verbs are verbs we use when a person does an action to themselves. In English we sometimes say “myself,” “yourself,” or “herself.” In Spanish, we use small words before the verb: <b>me</b>, <b>te</b>, and <b>se</b>. These small words tell us who receives the action.</p>
+          <p><b>Part 2: Use me with yo.</b><br>Use <b>me</b> when you talk about yourself: <b>Yo me levanto temprano.</b> This means “I wake up early.” I am doing the action to myself.</p>
+          <p><b>Part 3: Use te with tú.</b><br>Use <b>te</b> when you talk to one person: <b>Tú te bañas.</b> This means “You take a shower.” You are doing the action to yourself.</p>
+          <p><b>Part 4: Use se with él, ella, or a name like Sonia.</b><br>Use <b>se</b> when you talk about he, she, or a person’s name: <b>Sonia se prepara.</b> This means “Sonia gets herself ready.” Sonia is doing the action to herself.</p>
+        </div>
+
+        <h3>Exercise 5: Easy Rule</h3>
+        <table>
+          <tr><th>Person</th><th>Small Word</th><th>Meaning</th><th>Example</th></tr>
+          <tr><td>Yo</td><td><span class="big-word">me</span></td><td>myself</td><td>Yo me levanto temprano. = I wake up early.</td></tr>
+          <tr><td>Tú</td><td><span class="big-word">te</span></td><td>yourself</td><td>Tú te bañas. = You take a shower.</td></tr>
+          <tr><td>Él / Ella / Sonia</td><td><span class="big-word">se</span></td><td>himself / herself</td><td>Sonia se prepara. = Sonia gets herself ready.</td></tr>
+        </table>
+
+        <h3>Exercise 6: Mini Story Practice</h3>
+        <div class="translation-grid">
+          <div class="translation-box">
+            <h4>Spanish</h4>
+            <p>Sonia se levanta temprano. Primero, se lava la cara. Luego, se cepilla el cabello. Después, se prepara para la escuela.</p>
+            <p>Su hermana también se levanta. Ella se viste rápido.</p>
+            <p>Por la mañana, Sonia se siente feliz. Pero cuando hace frío, Sonia se pone su abrigo.</p>
+          </div>
+          <div class="translation-box">
+            <h4>English</h4>
+            <p>Sonia wakes up early. First, she washes her face. Then, she brushes her hair. After that, she gets ready for school.</p>
+            <p>Her sister also wakes up. She gets dressed quickly.</p>
+            <p>In the morning, Sonia feels happy. But when it is cold, Sonia puts on her coat.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="listening" class="tab-content">
+    <div class="card">
+      <h2>Listening</h2>
+<h3>Exercise 1: Listen to the Audio</h3>
+      <p class="instruction"><b>Instruction:</b> Listen to the audio. Then answer the 8 questions. Choose A, B, or C. Click “Check Answers” to see feedback for each question.</p>
+
+      <div class="audio-panel">
+        <div class="audio-controls">
+          <button class="action" onclick="playListeningAudio()">🔊 Play</button>
+          <button class="action" onclick="pauseListeningAudio()">⏸ Pause</button>
+          <button class="action" onclick="resumeListeningAudio()">▶ Resume</button>
+          <button class="action" onclick="stopListeningAudio()">⏹ Stop</button>
+          <span id="listeningPlayStatus" class="audio-status">Stopped</span>
+        </div>
+        <label for="audioTimeline"><b>Audio timeline</b></label>
+        <input type="range" id="audioTimeline" min="0" max="2" value="0" step="1" oninput="selectListeningPart(Number(this.value), false)" onchange="selectListeningPart(Number(this.value), true)">
+        <p id="timelineLabel" class="timeline-label">Part 1: Sonia wakes up and gets ready.</p>
+        <p id="listeningStatus">Selected: Part 1</p>
+        <div class="part-buttons">
+          <button id="listeningPart0" class="action selected-part" onclick="selectListeningPart(0, true)">Part 1</button>
+          <button id="listeningPart1" class="action" onclick="selectListeningPart(1, true)">Part 2</button>
+          <button id="listeningPart2" class="action" onclick="selectListeningPart(2, true)">Part 3</button>
+        </div>
+      </div>
+
+      <div class="prompt">
+        <p><b>Part 1:</b> Sonia se levanta temprano. Primero, se lava la cara. Luego, se cepilla el cabello. Después, se prepara para la escuela.</p>
+        <p><b>Part 2:</b> Su hermana también se levanta. Ella se viste rápido.</p>
+        <p><b>Part 3:</b> Por la mañana, Sonia se siente feliz. Pero cuando hace frío, Sonia se pone su abrigo.</p>
+      </div>
+
+      <h3>Exercise 2: Listening Questions</h3>
+      <div class="question"><b>1. What does Sonia do in the morning?</b><br>A) She sleeps all day<br>B) She wakes up and gets ready<br>C) She travels<br><select id="lq1"><option value="">Select your answer</option><option value="A">A</option><option value="B">B</option><option value="C">C</option></select><div id="lfb1" class="answer-feedback"></div></div>
+      <div class="question"><b>2. What does Sonia do first?</b><br>A) She washes her face<br>B) She eats dinner<br>C) She plays soccer<br><select id="lq2"><option value="">Select your answer</option><option value="A">A</option><option value="B">B</option><option value="C">C</option></select><div id="lfb2" class="answer-feedback"></div></div>
+      <div class="question"><b>3. What does Sonia brush?</b><br>A) Her shoes<br>B) Her hair<br>C) Her dog<br><select id="lq3"><option value="">Select your answer</option><option value="A">A</option><option value="B">B</option><option value="C">C</option></select><div id="lfb3" class="answer-feedback"></div></div>
+      <div class="question"><b>4. What does Sonia prepare for?</b><br>A) School<br>B) Vacation<br>C) A soccer game<br><select id="lq4"><option value="">Select your answer</option><option value="A">A</option><option value="B">B</option><option value="C">C</option></select><div id="lfb4" class="answer-feedback"></div></div>
+      <div class="question"><b>5. Who also wakes up?</b><br>A) Her teacher<br>B) Her sister<br>C) Her dog<br><select id="lq5"><option value="">Select your answer</option><option value="A">A</option><option value="B">B</option><option value="C">C</option></select><div id="lfb5" class="answer-feedback"></div></div>
+      <div class="question"><b>6. What does Sonia’s sister do quickly?</b><br>A) She gets dressed<br>B) She cooks<br>C) She reads<br><select id="lq6"><option value="">Select your answer</option><option value="A">A</option><option value="B">B</option><option value="C">C</option></select><div id="lfb6" class="answer-feedback"></div></div>
+      <div class="question"><b>7. How does Sonia feel in the morning?</b><br>A) Happy<br>B) Angry<br>C) Tired<br><select id="lq7"><option value="">Select your answer</option><option value="A">A</option><option value="B">B</option><option value="C">C</option></select><div id="lfb7" class="answer-feedback"></div></div>
+      <div class="question"><b>8. What does Sonia put on when it is cold?</b><br>A) Her coat<br>B) Her soccer shoes<br>C) Her hat<br><select id="lq8"><option value="">Select your answer</option><option value="A">A</option><option value="B">B</option><option value="C">C</option></select><div id="lfb8" class="answer-feedback"></div></div>
+      <button class="action" onclick="checkListening()">Check Answers</button>
+      <div id="listeningScore" class="feedback"></div>
+    </div>
+  </section>
+
+  <section id="speaking" class="tab-content">
+    <div class="card">
+      <h2>Speaking</h2>
+<h3>Exercise 1: Partner Conversation Practice</h3>
+      <p class="instruction"><b>Instruction:</b> Practice the 3 conversations with a teammate. Work in teams of 2. One student is Student A and the other is Student B. Practice in Spanish. Use the English column only for support.</p>
+
+      <h3>Exercise 2: Conversation 1 — Morning Routine</h3>
+      <table>
+        <tr><th>Spanish</th><th>English</th></tr>
+        <tr><td><b>Student A:</b> ¿A qué hora te levantas?</td><td><b>Student A:</b> What time do you wake up?</td></tr>
+        <tr><td><b>Student B:</b> Me levanto temprano.</td><td><b>Student B:</b> I wake up early.</td></tr>
+        <tr><td><b>Student A:</b> ¿Te lavas la cara?</td><td><b>Student A:</b> Do you wash your face?</td></tr>
+        <tr><td><b>Student B:</b> Sí, me lavo la cara en la mañana.</td><td><b>Student B:</b> Yes, I wash my face in the morning.</td></tr>
+      </table>
+
+      <h3>Exercise 3: Conversation 2 — Getting Ready for School</h3>
+      <table>
+        <tr><th>Spanish</th><th>English</th></tr>
+        <tr><td><b>Student A:</b> ¿Te preparas para la escuela?</td><td><b>Student A:</b> Do you get ready for school?</td></tr>
+        <tr><td><b>Student B:</b> Sí, me preparo para la escuela.</td><td><b>Student B:</b> Yes, I get ready for school.</td></tr>
+        <tr><td><b>Student A:</b> ¿Te cepillas el cabello?</td><td><b>Student A:</b> Do you brush your hair?</td></tr>
+        <tr><td><b>Student B:</b> Sí, me cepillo el cabello.</td><td><b>Student B:</b> Yes, I brush my hair.</td></tr>
+      </table>
+
+      <h3>Exercise 4: Conversation 3 — Cold Morning</h3>
+      <table>
+        <tr><th>Spanish</th><th>English</th></tr>
+        <tr><td><b>Student A:</b> ¿Cómo te sientes por la mañana?</td><td><b>Student A:</b> How do you feel in the morning?</td></tr>
+        <tr><td><b>Student B:</b> Me siento feliz.</td><td><b>Student B:</b> I feel happy.</td></tr>
+        <tr><td><b>Student A:</b> ¿Qué haces cuando hace frío?</td><td><b>Student A:</b> What do you do when it is cold?</td></tr>
+        <tr><td><b>Student B:</b> Me pongo mi abrigo.</td><td><b>Student B:</b> I put on my coat.</td></tr>
+      </table>
+
+      <div class="rubric">
+        <div><b>Partner Practice</b><br>Practice all 3 conversations with your teammate.</div>
+        <div><b>Switch Roles</b><br>Student A and Student B switch roles after each conversation.</div>
+        <div><b>Focus</b><br>Use reflexive verbs: me levanto, me lavo, me preparo, me cepillo, me siento, me pongo.</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="writing" class="tab-content">
+    <div class="card">
+      <h2>Writing</h2>
+<h3>Exercise 1: Fill in with me, te, or se</h3>
+      <p class="instruction"><b>Instruction:</b> Complete the practice with <b>me</b>, <b>te</b>, or <b>se</b>. Then click “Check Practice.” Correct answers turn green. Incorrect answers turn red and show the correct answer.</p>
+
+      
+      <div class="question">1. Yo <input id="q1" placeholder="me / te / se"><div id="fb1" class="answer-feedback"></div> levanto temprano.</div>
+      <div class="question">2. Tú <input id="q2" placeholder="me / te / se"><div id="fb2" class="answer-feedback"></div> lavas la cara.</div>
+      <div class="question">3. Sonia <input id="q3" placeholder="me / te / se"><div id="fb3" class="answer-feedback"></div> prepara.</div>
+      <div class="question">4. Yo <input id="q4" placeholder="me / te / se"><div id="fb4" class="answer-feedback"></div> siento feliz.</div>
+      <div class="question">5. Él <input id="q5" placeholder="me / te / se"><div id="fb5" class="answer-feedback"></div> pone el abrigo.</div>
+      <div class="question">6. Ella <input id="q6" placeholder="me / te / se"><div id="fb6" class="answer-feedback"></div> peina.</div>
+      <div class="question">7. Tú <input id="q7" placeholder="me / te / se"><div id="fb7" class="answer-feedback"></div> cepillas el cabello.</div>
+      <div class="question">8. Yo <input id="q8" placeholder="me / te / se"><div id="fb8" class="answer-feedback"></div> preparo para la escuela.</div>
+      <div class="question">9. Sonia <input id="q9" placeholder="me / te / se"><div id="fb9" class="answer-feedback"></div> lava la cara.</div>
+      <div class="question">10. Él <input id="q10" placeholder="me / te / se"><div id="fb10" class="answer-feedback"></div> viste rápido.</div>
+      <div class="question">11. Yo <input id="q11" placeholder="me / te / se"><div id="fb11" class="answer-feedback"></div> pongo mi abrigo.</div>
+      <div class="question">12. Tú <input id="q12" placeholder="me / te / se"><div id="fb12" class="answer-feedback"></div> sientes feliz.</div>
+      <div class="question">13. La hermana de Sonia <input id="q13" placeholder="me / te / se"><div id="fb13" class="answer-feedback"></div> levanta temprano.</div>
+      <div class="question">14. Yo <input id="q14" placeholder="me / te / se"><div id="fb14" class="answer-feedback"></div> cepillo los dientes.</div>
+      <div class="question">15. Sonia <input id="q15" placeholder="me / te / se"><div id="fb15" class="answer-feedback"></div> siente feliz.</div>
+      <button class="action" onclick="checkPractice()">Check Practice</button>
+      <div id="practiceFeedback" class="feedback"></div>
+    </div>
+
+    <div class="card">
+      <h3>Exercise 2: Writing Task</h3>
+      <p class="instruction"><b>Instruction:</b> Write 5–8 sentences about your morning routine. Use at least three reflexive verbs. You may use the sentence list below for help.</p>
+      <h4>Exercise 2A: Useful Sentences</h4>
+      <ul>
+        <li>Yo me levanto temprano.</li>
+        <li>Yo me levanto a las siete.</li>
+        <li>Yo me lavo la cara.</li>
+        <li>Yo me cepillo el cabello.</li>
+        <li>Yo me cepillo los dientes.</li>
+        <li>Yo me preparo para la escuela.</li>
+        <li>Yo me visto rápido.</li>
+        <li>Yo me pongo mi abrigo.</li>
+        <li>Yo me siento feliz.</li>
+        <li>Yo me siento cansado.</li>
+        <li>Yo me siento bien.</li>
+        <li>Yo me preparo en la mañana.</li>
+        <li>Yo me pongo mi ropa.</li>
+        <li>Yo me levanto con mi familia.</li>
+        <li>Yo me preparo todos los días.</li>
+      </ul>
+      <textarea id="writingText" placeholder="Example: Yo me levanto temprano. Me lavo la cara. Me preparo para la escuela..."></textarea>
+      <button class="action" onclick="analyzeWriting()">Get Writing Feedback</button>
+      <div id="writingFeedback" class="feedback"></div>
+    </div>
+
+    <div class="card">
+      <h3>Exercise 3: Reflection Questions</h3>
+      <p class="instruction"><b>Instruction:</b> Answer the following questions in Spanish.</p>
+      <ol>
+        <li>What does Sonia do in the morning?</li>
+        <li>Do you wash your face in the morning?</li>
+        <li>Do you feel happy in the morning?</li>
+        <li>Which reflexive verb is new for you?</li>
+        <li>How do you say “I get dressed” in Spanish?</li>
+      </ol>
+    </div>
+  </section>
+</main>
+
+<footer>
+  Unit 1 Spanish Practice App · Ready for classroom use
+</footer>
+
+<script>
+let listeningIsPlaying=false;
+let grammarIsPlaying=false;
+let listeningPaused=false;
+let grammarPaused=false;
+
+function openTab(tabId,btn){
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  btn.classList.add('active');
+}
+
+function toggleUnit(bodyId, iconId){
+  const body=document.getElementById(bodyId);
+  const icon=document.getElementById(iconId);
+  body.classList.toggle('open');
+  icon.textContent=body.classList.contains('open') ? '−' : '+';
+}
+
+function showFeedback(id,msg){
+  const el=document.getElementById(id);
+  el.textContent=msg;
+  el.className='feedback show';
+}
+
+function setStatus(id,text){
+  const el=document.getElementById(id);
+  if(el){el.textContent=text;}
+}
+
+function setSelectedButton(prefix,index,count){
+  for(let i=0;i<count;i++){
+    const btn=document.getElementById(prefix+i);
+    if(btn){btn.classList.toggle('selected-part',i===index);}
+  }
+}
+
+const listeningParts=[
+  'Sonia se levanta temprano. Primero, se lava la cara. Luego, se cepilla el cabello. Después, se prepara para la escuela.',
+  'Su hermana también se levanta. Ella se viste rápido.',
+  'Por la mañana, Sonia se siente feliz. Pero cuando hace frío, Sonia se pone su abrigo.'
+];
+const timelineLabels=[
+  'Part 1: Sonia wakes up and gets ready.',
+  'Part 2: Her sister also gets ready.',
+  'Part 3: Sonia feels happy and puts on her coat.'
+];
+
+function selectListeningPart(index,restartIfPlaying){
+  document.getElementById('audioTimeline').value=index;
+  document.getElementById('timelineLabel').textContent=timelineLabels[index];
+  document.getElementById('listeningStatus').textContent='Selected: Part '+(index+1);
+  setSelectedButton('listeningPart',index,3);
+  if(restartIfPlaying && listeningIsPlaying){playListeningAudio();}
+}
+
+function playListeningAudio(){
+  stopAllAudio();
+  const startIndex=Number(document.getElementById('audioTimeline').value);
+  selectListeningPart(startIndex,false);
+  const text=listeningParts.slice(startIndex).join(' ');
+  listeningIsPlaying=true;
+  listeningPaused=false;
+  setStatus('listeningPlayStatus','Playing');
+  speakText(text,'es-US',0.85,function(){
+    listeningIsPlaying=false;
+    listeningPaused=false;
+    setStatus('listeningPlayStatus','Stopped');
+  });
+}
+function pauseListeningAudio(){
+  if('speechSynthesis' in window && listeningIsPlaying){
+    speechSynthesis.pause();
+    listeningPaused=true;
+    setStatus('listeningPlayStatus','Paused');
+  }
+}
+function resumeListeningAudio(){
+  if('speechSynthesis' in window && listeningIsPlaying && listeningPaused){
+    speechSynthesis.resume();
+    listeningPaused=false;
+    setStatus('listeningPlayStatus','Playing');
+  }
+}
+function stopListeningAudio(){
+  if('speechSynthesis' in window){speechSynthesis.cancel();}
+  listeningIsPlaying=false;
+  listeningPaused=false;
+  setStatus('listeningPlayStatus','Stopped');
+}
+
+const grammarParts=[
+  'Part 1: What reflexive verbs mean. Reflexive verbs are verbs we use when a person does an action to themselves. In English we sometimes say myself, yourself, or herself. In Spanish, we use small words before the verb: me, te, and se. These small words tell us who receives the action.',
+  'Part 2: Use me with yo. Use me when you talk about yourself: Yo me levanto temprano. This means I wake up early. I am doing the action to myself.',
+  'Part 3: Use te with tú. Use te when you talk to one person: Tú te bañas. This means You take a shower. You are doing the action to yourself.',
+  'Part 4: Use se with él, ella, or a name like Sonia. Use se when you talk about he, she, or a person’s name: Sonia se prepara. This means Sonia gets herself ready. Sonia is doing the action to herself.'
+];
+const grammarLabels=[
+  'Part 1: What reflexive verbs mean.',
+  'Part 2: Use me with yo.',
+  'Part 3: Use te with tú.',
+  'Part 4: Use se with él, ella, or Sonia.'
+];
+
+function selectGrammarPart(index,restartIfPlaying){
+  document.getElementById('grammarTimeline').value=index;
+  document.getElementById('grammarTimelineLabel').textContent=grammarLabels[index];
+  document.getElementById('grammarStatus').textContent='Selected: Part '+(index+1);
+  setSelectedButton('grammarPart',index,4);
+  if(restartIfPlaying && grammarIsPlaying){playGrammarAudio();}
+}
+
+function playGrammarAudio(){
+  stopAllAudio();
+  const startIndex=Number(document.getElementById('grammarTimeline').value);
+  selectGrammarPart(startIndex,false);
+  const text=grammarParts.slice(startIndex).join(' ');
+  grammarIsPlaying=true;
+  grammarPaused=false;
+  setStatus('grammarPlayStatus','Playing');
+  speakText(text,'en-US',0.9,function(){
+    grammarIsPlaying=false;
+    grammarPaused=false;
+    setStatus('grammarPlayStatus','Stopped');
+  });
+}
+function pauseGrammarAudio(){
+  if('speechSynthesis' in window && grammarIsPlaying){
+    speechSynthesis.pause();
+    grammarPaused=true;
+    setStatus('grammarPlayStatus','Paused');
+  }
+}
+function resumeGrammarAudio(){
+  if('speechSynthesis' in window && grammarIsPlaying && grammarPaused){
+    speechSynthesis.resume();
+    grammarPaused=false;
+    setStatus('grammarPlayStatus','Playing');
+  }
+}
+function stopGrammarAudio(){
+  if('speechSynthesis' in window){speechSynthesis.cancel();}
+  grammarIsPlaying=false;
+  grammarPaused=false;
+  setStatus('grammarPlayStatus','Stopped');
+}
+
+function stopAllAudio(){
+  if('speechSynthesis' in window){speechSynthesis.cancel();}
+  listeningIsPlaying=false;
+  grammarIsPlaying=false;
+  listeningPaused=false;
+  grammarPaused=false;
+  setStatus('listeningPlayStatus','Stopped');
+  setStatus('grammarPlayStatus','Stopped');
+}
+
+function speakText(text,lang,rate,onEnd){
+  if(!('speechSynthesis' in window)){
+    alert('Speech audio is not supported in this browser.');
+    if(onEnd){onEnd();}
+    return;
+  }
+  const utterance=new SpeechSynthesisUtterance(text);
+  utterance.lang=lang;
+  utterance.rate=rate;
+  utterance.pitch=1;
+  utterance.onend=function(){if(onEnd){onEnd();}};
+  utterance.onerror=function(){if(onEnd){onEnd();}};
+  speechSynthesis.speak(utterance);
+}
+
+function markQuestion(selectId,feedbackId,answer){
+  const val=document.getElementById(selectId).value;
+  const fb=document.getElementById(feedbackId);
+  const box=fb.closest('.question');
+  box.classList.remove('correct','incorrect');
+  fb.classList.remove('correct-text','incorrect-text');
+  if(val===answer){
+    box.classList.add('correct');
+    fb.classList.add('correct-text');
+    fb.textContent='✅ Correct';
+    return 1;
+  }
+  box.classList.add('incorrect');
+  fb.classList.add('incorrect-text');
+  fb.textContent='❌ Incorrect. Correct answer: '+answer;
+  return 0;
+}
+
+function checkListening(){
+  const answers=['B','A','B','A','B','A','A','A'];
+  let score=0;
+  answers.forEach((ans,i)=>{score+=markQuestion('lq'+(i+1),'lfb'+(i+1),ans);});
+  showFeedback('listeningScore','Final score: '+score+'/8. Review the red boxes and try again.');
+}
+
+function checkPractice(){
+  const answers=['me','te','se','me','se','se','te','me','se','se','me','te','se','me','se'];
+  let score=0;
+  answers.forEach((answer,i)=>{
+    const number=i+1;
+    const input=document.getElementById('q'+number);
+    const feedback=document.getElementById('fb'+number);
+    const box=input.closest('.question');
+    const value=input.value.trim().toLowerCase();
+    box.classList.remove('correct','incorrect');
+    feedback.classList.remove('correct-text','incorrect-text');
+    if(value===answer){
+      score++;
+      box.classList.add('correct');
+      feedback.classList.add('correct-text');
+      feedback.textContent='✅ Correct';
+    }else{
+      box.classList.add('incorrect');
+      feedback.classList.add('incorrect-text');
+      feedback.textContent='❌ Incorrect. Correct answer: '+answer;
+    }
+  });
+  showFeedback('practiceFeedback','Final score: '+score+'/15. Review the red boxes and try again.');
+}
+
+function analyzeWriting(){
+  const text=document.getElementById('writingText').value.trim();
+  const words=text?text.split(/\s+/).length:0;
+  const targets=['me levanto','me lavo','me preparo','me siento','me pongo','me cepillo','me visto'];
+  let used=targets.filter(v=>text.toLowerCase().includes(v)).length;
+  let msg='You wrote '+words+' words and used '+used+' target reflexive expressions. ';
+  msg += words<30 ? 'Add more complete sentences.' : 'Good work. Check accents, punctuation, and verb agreement.';
+  showFeedback('writingFeedback',msg);
+}
+
+document.addEventListener('DOMContentLoaded',function(){
+  selectGrammarPart(0,false);
+  selectListeningPart(0,false);
+});
+</script>
+</body>
+</html>
